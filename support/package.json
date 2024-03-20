@@ -1,0 +1,12 @@
+{
+  "name": "git-diff-support",
+  "version": "0",
+  "license": "MIT",
+  "scripts": {
+    "start": "pge start --user user --password pass --port 5432 from_db to_db",
+    "clean": "pge clean"
+  },
+  "dependencies": {
+    "embedded-postgres-cli": "^0.0.2"
+  }
+}

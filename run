@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+
+cargo run --quiet -- \
+  --from-db "postgres://user:pass@localhost:5432/from_db" \
+  --to-db "postgres://user:pass@localhost:5432/from_db" \
+  --from-table "information_schema.columns" \
+  --to-table "information_schema.columns"
+
+
+echo "--------------------------------------------"
+
+
+RUST_BACKTRACE=1 \
+cargo run --quiet -- \
+  --from-db "postgres://user:pass@localhost:5432/to_db" \
+  --to-db "postgres://user:pass@localhost:5432/to_db" \
+  --from-table "test_from_should_not_be_broken" \
+  --to-table "test_to_should_not_be_broken"
+
+echo "--------------------------------------------"
+
+
+RUST_BACKTRACE=1 \
+cargo run --quiet -- \
+  --from-db "postgres://user:pass@localhost:5432/to_db" \
+  --to-db "postgres://user:pass@localhost:5432/to_db" \
+  --from-table "test_from_table" \
+  --to-table "test_to_table"

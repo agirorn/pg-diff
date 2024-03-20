@@ -1,0 +1,18 @@
+[package]
+name = "pg-diff"
+description = "PostgreSQL table data diff tool"
+version = "0.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.81"
+sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "postgres", "json", "macros", "rust_decimal", "time"] }
+sqlx-pgrow-serde = { version = "0.2.0", features = ["json", "chrono", "runtime-tokio-rustls", "sqlite", "postgres", "uuid", "decimal"] }
+tokio = { version = "1.36.0", features = ["full"] }
+futures = "0.3"
+futures-util = "0.3"
+serde_json = "1.0.114"
+prettydiff = "0.6.4"
+clap = { version = "4.5.3", features = ["cargo"] }
