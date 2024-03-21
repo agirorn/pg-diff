@@ -24,7 +24,7 @@ cargo build
 ## Usage
 
 You can run `cargo run -- <ARGS>` or `./target/debug/pg-diff <ARGS>` or just
-`pg-diff ARGS` if you copy it to your path
+`pg-diff ARGS` if you copy it to your path.
 
 ```bash
 pg-diff \

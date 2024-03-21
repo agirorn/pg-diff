@@ -45,7 +45,8 @@ pub async fn diff(args: DiffArgs<'_>) -> Result<DiffResult> {
     let column_names: Vec<ColumnName> = sqlx::query_as!(
         ColumnName,
         r#"
-            SELECT column_name FROM information_schema.columns
+            SELECT column_name
+            FROM information_schema.columns
             WHERE table_schema = $1
             AND table_name = $2
         "#,
@@ -61,7 +62,7 @@ pub async fn diff(args: DiffArgs<'_>) -> Result<DiffResult> {
         .map(|r: ColumnName| r.column_name)
         .filter(|r| r.is_some())
         .map(|r| match r {
-            Some(v) => v,
+            Some(v) => format!("\"{}\"", v),
             None => "".to_string(),
         })
         .collect::<Vec<String>>();
