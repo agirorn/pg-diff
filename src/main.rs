@@ -38,28 +38,9 @@ async fn main() -> Result<()> {
     let to_db: String = matches.get_one::<String>("TO_DB").unwrap().into();
     let to_table: String = matches.get_one::<String>("TO_TABLE").unwrap().into();
     eprintln!("Diffing");
-    eprintln!(
-        "  From: {from_db} {from_table}",
-        from_db = from_db,
-        from_table = from_table,
-    );
-    eprintln!(
-        "  To: {to_db} {to_table}",
-        to_db = to_db,
-        to_table = to_table,
-    );
+    eprintln!("  From: {from_db} {from_table}",);
+    eprintln!("  To: {to_db} {to_table}",);
 
-    // std::process::exit(0);
-    // TODO: Add an order argument
-    // TODO: Clap command line argument parsing
-    // TODO: add tests and verify things are working as expected
-
-    // let result: DiffResult = diff(DiffArgs {
-    //     from_db: "postgres://user:pass@localhost:5432/from_db",
-    //     from_table: "information_schema.columns",
-    //     to_db: "postgres://user:pass@localhost:5432/from_db",
-    //     to_table: "information_schema.columns",
-    // })
     let result: DiffResult = diff(DiffArgs {
         from_db: &from_db,
         from_table: &from_table,
@@ -81,7 +62,8 @@ async fn main() -> Result<()> {
 }
 
 fn print_same(data: Same) {
-    println!("Diff {} rows are all the same", data.rows_affected);
+    let Same { rows_affected } = data;
+    println!("Diff {rows_affected} rows are all the same");
 }
 
 fn print_difference(data: Different) {
@@ -95,8 +77,5 @@ fn print_difference(data: Different) {
         let to = serde_json::to_string(&row.to).unwrap();
         println!("{}", diff_chars(&from, &to).set_highlight_whitespace(true));
     }
-    println!(
-        "Diffing {} rows failed for {} rows.",
-        rows_affected, diffrent_lines
-    );
+    println!("Diffing {rows_affected} rows failed for {diffrent_lines} rows.",);
 }

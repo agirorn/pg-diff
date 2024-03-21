@@ -34,7 +34,7 @@ async fn setup() -> Result<()> {
         );
         INSERT INTO from_offset_colum_table (col_1, "offset")
         VALUES (1,'offset-1'), (2,'offset-2');
-    "#;
+        "#;
     let pool = sqlx::postgres::PgPoolOptions::new()
         .max_connections(5)
         .connect(DB)
@@ -45,9 +45,7 @@ async fn setup() -> Result<()> {
 }
 
 async fn teardown() -> Result<()> {
-    let sql: &str = r#"
-        DROP TABLE IF exists from_offset_colum_table ;
-    "#;
+    let sql: &str = "DROP TABLE IF exists from_offset_colum_table;";
     let pool = sqlx::postgres::PgPoolOptions::new()
         .max_connections(5)
         .connect(DB)

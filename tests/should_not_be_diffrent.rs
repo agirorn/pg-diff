@@ -52,8 +52,8 @@ async fn setup() -> Result<()> {
 
 async fn teardown() -> Result<()> {
     let sql: &str = r#"
-        DROP TABLE IF exists test_from_should_not_be_broken;
-        DROP TABLE IF exists test_to_should_not_be_broken;
+        DROP TABLE IF EXISTS test_from_should_not_be_broken;
+        DROP TABLE IF EXISTS test_to_should_not_be_broken;
     "#;
     let pool = sqlx::postgres::PgPoolOptions::new()
         .max_connections(5)

@@ -3,9 +3,7 @@ use pg_diff::diff::{diff, Diff, DiffArgs, DiffResult, Different, Same};
 use sqlx::Executor;
 
 const FROM_DB: &str = "postgres://user:pass@localhost:5432/from_db";
-// const FROM_TABLE: &str = "information_schema.columns";
 const TO_DB: &str = "postgres://user:pass@localhost:5432/to_db";
-// const TO_TABLE: &str = "information_schema.columns";
 
 #[tokio::test]
 async fn compairing_same_table_from_the_same_database() -> Result<()> {
@@ -88,12 +86,12 @@ async fn setup(table_name: &str) -> Result<()> {
     let sql: &str = &format!(
         r#"
         CREATE TABLE {table_name} (
-            col_1 int,
-            col_2 varchar(255)
+            col_1 INT,
+            col_2 VARCHAR(255)
         );
         INSERT INTO {table_name} (col_1, col_2)
         VALUES (1, 'v-1');
-    "#
+        "#
     );
     let pool = sqlx::postgres::PgPoolOptions::new()
         .max_connections(5)
@@ -116,7 +114,7 @@ async fn insert_into_from(table_name: &str) -> Result<()> {
         r#"
         INSERT INTO {table_name} (col_1, col_2)
         VALUES (2, 'v-2');
-    "#
+        "#
     );
     let pool = sqlx::postgres::PgPoolOptions::new()
         .max_connections(5)
@@ -128,11 +126,7 @@ async fn insert_into_from(table_name: &str) -> Result<()> {
 }
 
 async fn teardown(table_name: &str) -> Result<()> {
-    let sql: &str = &format!(
-        r#"
-        drop table if exists {table_name};
-    "#
-    );
+    let sql: &str = &format!("DROP TABLE IF EXISTS {table_name};");
     let pool = sqlx::postgres::PgPoolOptions::new()
         .max_connections(5)
         .connect(FROM_DB)

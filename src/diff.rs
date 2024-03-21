@@ -62,25 +62,17 @@ pub async fn diff(args: DiffArgs<'_>) -> Result<DiffResult> {
         .map(|r: ColumnName| r.column_name)
         .filter(|r| r.is_some())
         .map(|r| match r {
-            Some(v) => format!("\"{}\"", v),
+            Some(v) => format!("\"{v}\""),
             None => "".to_string(),
         })
         .collect::<Vec<String>>();
 
     let column_names = column_names.join(", ");
-    let order_by = format!("ORDER BY {} ASC", column_names);
+    let order_by = format!("ORDER BY {column_names} ASC");
 
-    let sql: &str = &format!(
-        "select * from {from_table} {order_by}",
-        from_table = from_table,
-        order_by = order_by
-    );
+    let sql: &str = &format!("select {column_names} from {from_table} {order_by}",);
     let mut from_rows = from_pool.fetch_many(sql);
-    let sql: &str = &format!(
-        "select * from {to_table} {order_by}",
-        to_table = to_table,
-        order_by = order_by
-    );
+    let sql: &str = &format!("select {column_names} from {to_table} {order_by}",);
     let mut to_rows = to_pool.fetch_many(sql);
     let mut rows_affected = 0;
     let mut diffs: Vec<Diff> = vec![];
