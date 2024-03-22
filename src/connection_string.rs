@@ -2,7 +2,7 @@ use anyhow::Result;
 use url::Url;
 
 pub fn parse_without_user_pass(url: &str) -> Result<String> {
-    let parsed = Url::parse(&url)?;
+    let parsed = Url::parse(url).expect(&format!("Expected the url: ({url}) to be a valid URL"));
     let scheme = parsed.scheme();
     let path = parsed.path();
     let port = parsed.port();
