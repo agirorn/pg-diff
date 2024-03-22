@@ -1,5 +1,3 @@
-use std::fmt::format;
-
 use anyhow::Result;
 use futures::StreamExt;
 use serde_json::Value;
