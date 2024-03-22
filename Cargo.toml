@@ -1,7 +1,9 @@
 [package]
 name = "pg-diff"
-description = "PostgreSQL table data diff tool"
 version = "0.0.0"
+description = "PostgreSQL table data diff tool"
+repository = "https://github.com/agirorn/pg-diff"
+license-file = "LICENSE"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
