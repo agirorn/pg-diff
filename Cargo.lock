@@ -1230,6 +1230,7 @@ dependencies = [
  "sqlx",
  "sqlx-pgrow-serde",
  "tokio",
+ "url",
 ]
 
 [[package]]

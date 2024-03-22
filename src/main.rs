@@ -1,6 +1,8 @@
+pub mod connection_string;
 pub mod diff;
 use anyhow::Result;
 use clap::command;
+pub use connection_string::parse_without_user_pass;
 pub use diff::{diff, DiffArgs, DiffResult, Different, Same};
 use prettydiff::diff_chars;
 
@@ -37,9 +39,12 @@ async fn main() -> Result<()> {
     let from_table: String = matches.get_one::<String>("FROM_TABLE").unwrap().into();
     let to_db: String = matches.get_one::<String>("TO_DB").unwrap().into();
     let to_table: String = matches.get_one::<String>("TO_TABLE").unwrap().into();
+
+    let from = parse_without_user_pass(&from_db).unwrap();
+    let to = parse_without_user_pass(&to_db).unwrap();
     eprintln!("Diffing");
-    eprintln!("  From: {from_db} {from_table}",);
-    eprintln!("  To: {to_db} {to_table}",);
+    eprintln!("  From: {from} {from_table}",);
+    eprintln!("  To: {to} {to_table}",);
 
     let result: DiffResult = diff(DiffArgs {
         from_db: &from_db,
