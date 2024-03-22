@@ -5,7 +5,7 @@ use sqlx::Executor;
 const DB: &str = "postgres://user:pass@localhost:5432/from_db";
 
 #[tokio::test]
-async fn compairing_same_table_from_the_same_database() -> Result<()> {
+async fn tables_with_offset_column() -> Result<()> {
     setup().await.unwrap();
     let result = diff(DiffArgs {
         from_db: DB,
