@@ -1,3 +1,5 @@
+use std::fmt::format;
+
 use anyhow::Result;
 use futures::StreamExt;
 use serde_json::Value;
@@ -67,8 +69,14 @@ pub async fn diff(args: DiffArgs<'_>) -> Result<DiffResult> {
         })
         .collect::<Vec<String>>();
 
+    let order_column_names = column_names.clone();
+    let order_column_names = order_column_names
+        .into_iter()
+        .map(|l| format!("{}::TEXT", l))
+        .collect::<Vec<String>>()
+        .join(", ");
     let column_names = column_names.join(", ");
-    let order_by = format!("ORDER BY {column_names} ASC");
+    let order_by = format!("ORDER BY {order_column_names} ASC");
 
     let sql: &str = &format!("select {column_names} from {from_table} {order_by}",);
     let mut from_rows = from_pool.fetch_many(sql);
