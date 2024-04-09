@@ -73,7 +73,12 @@ pub async fn diff(args: DiffArgs<'_>) -> Result<DiffResult> {
         .map(|l| format!("{}::TEXT", l))
         .collect::<Vec<String>>()
         .join(", ");
-    let column_names = column_names.join(", ");
+    let column_names = column_names
+        .clone()
+        .into_iter()
+        .map(|l| format!("{}::TEXT", l))
+        .collect::<Vec<String>>()
+        .join(", ");
     let order_by = format!("ORDER BY {order_column_names} ASC");
 
     let sql: &str = &format!("select {column_names} from {from_table} {order_by}",);
