@@ -3,7 +3,7 @@
   "version": "0",
   "license": "MIT",
   "scripts": {
-    "start": "pge start --user user --password pass --port 5432 from_db to_db",
+    "start": "pge start --user user --password pass --port 5555 from_db to_db",
     "clean": "pge clean"
   },
   "dependencies": {
