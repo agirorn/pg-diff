@@ -72,7 +72,7 @@ async fn compare_diffrent_tables_2_databases() -> Result<()> {
         assert_eq!(
             data.diffs,
             vec![Diff {
-                from: "[2,\"v-2\"]".to_string(),
+                from: "[\"2\",\"v-2\"]".to_string(),
                 to: "".to_string(),
             }]
         );
