@@ -1,3 +1,4 @@
+use crate::tools::{enshure_it_has_schema, wrap_tables_names};
 use anyhow::Result;
 use futures::StreamExt;
 use serde_json::Value;
@@ -33,9 +34,11 @@ pub async fn diff(args: DiffArgs<'_>) -> Result<DiffResult> {
         .connect(to_db)
         .await
         .unwrap();
+    let from_table = enshure_it_has_schema(&from_table);
+    let to_table = enshure_it_has_schema(&to_table);
     let res: Vec<&str> = from_table.split('.').collect();
-    let mut table = from_table;
-    let mut schema = "public";
+    let mut table: &str = &from_table;
+    let mut schema: &str = "public";
 
     if res.len() != 1 {
         schema = res[0];
@@ -80,6 +83,8 @@ pub async fn diff(args: DiffArgs<'_>) -> Result<DiffResult> {
         .collect::<Vec<String>>()
         .join(", ");
     let order_by = format!("ORDER BY {order_column_names} ASC");
+    let from_table = wrap_tables_names(&from_table);
+    let to_table = wrap_tables_names(&to_table);
 
     let sql: &str = &format!("select {column_names} from {from_table} {order_by}",);
     let mut from_rows = from_pool.fetch_many(sql);

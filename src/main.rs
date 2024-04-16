@@ -1,5 +1,6 @@
 pub mod connection_string;
 pub mod diff;
+pub mod tools;
 use anyhow::Result;
 use clap::command;
 pub use connection_string::parse_without_user_pass;
